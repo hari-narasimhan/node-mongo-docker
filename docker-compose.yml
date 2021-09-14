@@ -1,0 +1,23 @@
+version: '3.7'
+
+services:
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    environment:
+      - MONGO_DB_URL
+      - AUTH_SECRET
+      - PORT
+    ports:
+      - "4040:4040"
+    container_name: api
+    links:
+      - mongo-db
+  mongo-db:
+    image: mongo
+    ports:
+      - "27017:27017"
+    container_name: mongo-db
+    volumes:
+      - ./data/db/:/data/db
